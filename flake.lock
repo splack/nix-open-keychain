@@ -7,11 +7,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1671049279,
-        "narHash": "sha256-Z/Tp7VvNBA5bE7xCKZU3dhThClKI++5BnheNq+Ry9dk=",
+        "lastModified": 1671135683,
+        "narHash": "sha256-B3pexHksVwN2PjgUTMgXVEgthgwGyOYJA7qBKWLG6cw=",
         "owner": "tadfisher",
         "repo": "android-nixpkgs",
-        "rev": "66ee51950f8f7fa5e98fd868962c6061b0582750",
+        "rev": "ddd8d86631bcdcd31ebe7296a47f82965722398a",
         "type": "github"
       },
       "original": {
@@ -111,11 +111,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1670929434,
-        "narHash": "sha256-n5UBO6XBV4h3TB7FYu2yAuNQMEYOrQyKeODUwKe06ow=",
+        "lastModified": 1671021324,
+        "narHash": "sha256-MDB6TncBzBCvAgQmjNn14VIaO5wdbxExp8NGP990Udk=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "1710ed1f6f8ceb75cf7d1cf55ee0cc21760e1c7a",
+        "rev": "62433a4892603c523840a67e50b6631c37adb928",
         "type": "github"
       },
       "original": {
@@ -143,11 +143,11 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1671052794,
-        "narHash": "sha256-rmEwllUL1U9OpGx1PlyAPvd+2rDMI2xr6T/0w6Dhiv4=",
+        "lastModified": 1671190014,
+        "narHash": "sha256-NW385LW4Nj53Hbv3LXr458s4NL2/wcARC8rzK7vSWkw=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "b49daf0688b4f945de3091b50bf0a7b83beabb19",
+        "rev": "fbcb61bd7eb19914cbd88789c3586a63ff46b72b",
         "type": "github"
       },
       "original": {
@@ -159,19 +159,19 @@
     "open-keychain": {
       "flake": false,
       "locked": {
-        "lastModified": 1629192458,
-        "narHash": "sha256-IpiplnIm1tJDkP0OxBp/AYI1q+OT7DE/XEKDtnot6uY=",
+        "lastModified": 1670893961,
+        "narHash": "sha256-rI5rCs9kQnAw9v8SKf6w8BBayqLYBHswFsBYEMqpopA=",
         "ref": "refs/heads/master",
-        "rev": "6f38af15828e07f0186109a89b7aa57f54101cfa",
-        "revCount": 7288,
+        "rev": "80d51dd874854edfe19510564139b7fa9b579aa1",
+        "revCount": 7289,
         "submodules": true,
         "type": "git",
-        "url": "https://github.com/Tho85/open-keychain?ref=fix-android-13-security-level-12-2022&rev=05722877a3f9211ab401bb35c5e8da8906b117fb"
+        "url": "https://github.com/splack/open-keychain"
       },
       "original": {
         "submodules": true,
         "type": "git",
-        "url": "https://github.com/Tho85/open-keychain?ref=fix-android-13-security-level-12-2022&rev=05722877a3f9211ab401bb35c5e8da8906b117fb"
+        "url": "https://github.com/splack/open-keychain"
       }
     },
     "root": {

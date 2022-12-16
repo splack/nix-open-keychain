@@ -8,7 +8,7 @@
     android.url = "github:tadfisher/android-nixpkgs";
     open-keychain = {
       flake = false;
-      url = "https://github.com/Tho85/open-keychain?ref=fix-android-13-security-level-12-2022&rev=05722877a3f9211ab401bb35c5e8da8906b117fb";
+      url = "https://github.com/splack/open-keychain";
       type = "git";
       submodules = true;
     };
