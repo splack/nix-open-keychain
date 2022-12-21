@@ -18,8 +18,8 @@
 
   outputs = { self, nixpkgs, devshell, flake-utils, android, open-keychain }:
     {
-      overlay = final: prev: {
-        inherit (self.packages.${final.system}) android-sdk android-studio;
+      overlays.default = final: prev: {
+        inherit (self.packages.${final.system}) android-sdk;
       };
     }
     //
@@ -30,34 +30,35 @@
           config.allowUnfree = true;
           overlays = [
             devshell.overlay
-            self.overlay
+            self.overlays.default
           ];
         };
+
+        aapt2BuildToolsVersion = "33.0.0";
+
+        android-sdk = android.sdk.${system} (sdkPkgs: with sdkPkgs; [
+          build-tools-29-0-2
+          build-tools-33-0-0 # for a compatible aapt2
+          cmdline-tools-latest
+          platform-tools
+          platforms-android-29
+        ]);
       in
       {
-        packages = {
-          android-sdk = android.sdk.${system} (sdkPkgs: with sdkPkgs; [
-            # Useful packages for building and testing.
-            build-tools-29-0-2
-            build-tools-33-0-0 # for a compatible aapt2
-            cmdline-tools-latest
-            #emulator
-            platform-tools
-            platforms-android-29
-
-            # Other useful packages for a development environment.
-            # sources-android-30
-            # system-images-android-30-google-apis-x86
-            # system-images-android-30-google-apis-playstore-x86
-          ]);
-
-          # android-studio = pkgs.androidStudioPackages.stable;
-          # android-studio = pkgs.androidStudioPackages.beta;
-          # android-studio = pkgs.androidStudioPackages.preview;
-          # android-studio = pkgs.androidStudioPackage.canary;
+        devShell = import ./devshell.nix {
+          inherit open-keychain android-sdk;
+          inherit (pkgs) devshell;
+          aapt2 = pkgs.stdenvNoCC.mkDerivation {
+            name = "aapt2";
+            buildCommand = ''
+              dir="$out/bin"
+              mkdir -p "$dir"
+              cp "${android-sdk}/share/android-sdk/build-tools/${aapt2BuildToolsVersion}/aapt2" "$dir"
+            '';
+          };
+          jdk = pkgs.openjdk11_headless;
+          gradle = pkgs.gradle_6;
         };
-
-        devShell = import ./devshell.nix { inherit pkgs open-keychain; };
       }
     );
 }

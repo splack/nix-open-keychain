@@ -1,7 +1,5 @@
-{ pkgs, open-keychain }:
-with pkgs;
+{ android-sdk, gradle, aapt2, jdk, open-keychain, devshell }:
 let
-  buildToolsVersion = "33.0.0";
   androidSdkRoot = "${android-sdk}/share/android-sdk";
   key = {
     name = "release";
@@ -10,16 +8,19 @@ let
     store = "$GRADLE_USER_HOME/release.keystore";
   };
   src = "src";
+  all = {
+    name = "all";
+    help = "copy source, generate release key, build and upload apk over usb";
+  };
+  gradleCmd = "gradle --no-daemon";
 in
-# Configure your development environment.
-#
-# Documentation: https://github.com/numtide/devshell
 devshell.mkShell {
   name = "open-keychain";
   motd = ''
-    Entered the Android app development environment.
+    Entered open-keychain android development environment.
 
     menu - list of commands
+    ${all.name} - ${all.help}
   '';
   env = [
     {
@@ -32,7 +33,7 @@ devshell.mkShell {
     }
     {
       name = "JAVA_HOME";
-      value = jdk11.home;
+      value = jdk.home;
     }
     {
       name = "GRADLE_USER_HOME";
@@ -40,9 +41,7 @@ devshell.mkShell {
     }
   ];
   commands = [
-    {
-      name = "all";
-      help = "copy source, generate release key, build and upload apk over usb";
+    (all // {
       command = ''
         unpack
         cd ${src}
@@ -50,9 +49,10 @@ devshell.mkShell {
         build
         upload
       '';
-    }
+    })
     {
       name = "unpack";
+      help = "extract source to ${src} and set permissions";
       command = ''
         cp -r ${open-keychain} ${src}
         find ${src} -type d -exec chmod 755 '{}' ';'
@@ -60,10 +60,11 @@ devshell.mkShell {
     }
     {
       name = "configure";
+      help = "set gradle properties and generate apk signing key";
       command = ''
         mkdir -p $GRADLE_USER_HOME
         test -f ${key.store} \
-        || keytool \
+        || ${jdk}/bin/keytool \
           -genkey \
           -keystore ${key.store} \
           -alias ${key.name} \
@@ -78,24 +79,35 @@ devshell.mkShell {
         signingStorePassword=${key.password}
         signingKeyAlias=${key.name}
         signingKeyPassword=${key.password}
-        android.aapt2FromMavenOverride=${androidSdkRoot}/build-tools/${buildToolsVersion}/aapt2
+        android.aapt2FromMavenOverride=${aapt2}/bin/aapt2
         EOF
       '';
     }
     {
       name = "build";
-      command = "gradle assembleFdroid";
+      help = "compile fdroid apks";
+      command = "${gradleCmd} assembleFdroid";
     }
     {
       name = "upload";
-      command = "adb install OpenKeychain/build/outputs/apk/fdroid/release/OpenKeychain-fdroid-release.apk";
+      help = "install the release apk on any available android device";
+      command =
+        let
+          adb = "${android-sdk}/bin/adb";
+        in
+        ''
+          trap "${adb} kill-server" INT QUIT TERM EXIT
+          echo "Waiting for device to upload APK to..."
+          ${adb} wait-for-device
+          ${gradleCmd} installFdroidRelease
+        '';
     }
   ];
   packages = [
     # android-studio
     android-sdk
-    gradle_6
-    jdk11
+    gradle
+    jdk
   ];
 }
 
