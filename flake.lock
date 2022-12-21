@@ -159,19 +159,20 @@
     "open-keychain": {
       "flake": false,
       "locked": {
-        "lastModified": 1670893961,
+        "lastModified": 1670436361,
         "narHash": "sha256-rI5rCs9kQnAw9v8SKf6w8BBayqLYBHswFsBYEMqpopA=",
-        "ref": "refs/heads/master",
-        "rev": "80d51dd874854edfe19510564139b7fa9b579aa1",
+        "ref": "refs/pull/2804/head",
+        "rev": "05722877a3f9211ab401bb35c5e8da8906b117fb",
         "revCount": 7289,
         "submodules": true,
         "type": "git",
-        "url": "https://github.com/splack/open-keychain"
+        "url": "https://github.com/open-keychain/open-keychain"
       },
       "original": {
+        "ref": "refs/pull/2804/head",
         "submodules": true,
         "type": "git",
-        "url": "https://github.com/splack/open-keychain"
+        "url": "https://github.com/open-keychain/open-keychain"
       }
     },
     "root": {

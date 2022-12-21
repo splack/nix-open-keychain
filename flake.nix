@@ -8,8 +8,9 @@
     android.url = "github:tadfisher/android-nixpkgs";
     open-keychain = {
       flake = false;
-      url = "https://github.com/splack/open-keychain";
+      url = "https://github.com/open-keychain/open-keychain";
       type = "git";
+      ref = "refs/pull/2804/head";
       submodules = true;
     };
   };
