@@ -11,6 +11,7 @@
       url = "https://github.com/open-keychain/open-keychain";
       type = "git";
       ref = "refs/pull/2804/head";
+      rev = "05722877a3f9211ab401bb35c5e8da8906b117fb";
       submodules = true;
     };
   };
