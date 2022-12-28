@@ -46,6 +46,7 @@ devshell.mkShell {
         unpack
         cd ${src}
         configure
+        fix
         build
         upload
       '';
@@ -82,6 +83,11 @@ devshell.mkShell {
         android.aapt2FromMavenOverride=${aapt2}/bin/aapt2
         EOF
       '';
+    }
+    {
+      name = "fix";
+      help = "patch source";
+      command = "patch -p1 -i ../compileSdk.patch";
     }
     {
       name = "build";

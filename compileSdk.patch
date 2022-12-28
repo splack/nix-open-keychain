@@ -1,0 +1,18 @@
+diff --git a/build.gradle b/build.gradle
+index 8d75412..df3fdae 100644
+--- a/build.gradle
++++ b/build.gradle
+@@ -25,3 +25,13 @@ allprojects {
+ ext {
+     compileSdkVersion = 33
+ }
++
++subprojects { subproject ->
++    afterEvaluate{
++        if((subproject.plugins.hasPlugin('android') || subproject.plugins.hasPlugin('android-library'))) {
++            android {
++                compileSdkVersion rootProject.ext.compileSdkVersion
++            }
++        }
++    }
++}

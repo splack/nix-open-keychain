@@ -10,8 +10,8 @@
       flake = false;
       url = "https://github.com/open-keychain/open-keychain";
       type = "git";
-      ref = "refs/pull/2804/head";
-      rev = "05722877a3f9211ab401bb35c5e8da8906b117fb";
+      ref = "refs/heads/master";
+      rev = "c1861535bc73d42cc572a5c9f82213c7d6260045";
       submodules = true;
     };
   };
@@ -34,28 +34,18 @@
           ];
         };
 
-        aapt2BuildToolsVersion = "33.0.0";
-
         android-sdk = android.sdk.${system} (sdkPkgs: with sdkPkgs; [
-          build-tools-29-0-2
-          build-tools-33-0-0 # for a compatible aapt2
+          build-tools-30-0-2
           cmdline-tools-latest
           platform-tools
-          platforms-android-29
+          platforms-android-33
         ]);
       in
       {
         devShell = import ./devshell.nix {
           inherit open-keychain android-sdk;
           inherit (pkgs) devshell;
-          aapt2 = pkgs.stdenvNoCC.mkDerivation {
-            name = "aapt2";
-            buildCommand = ''
-              dir="$out/bin"
-              mkdir -p "$dir"
-              cp "${android-sdk}/share/android-sdk/build-tools/${aapt2BuildToolsVersion}/aapt2" "$dir"
-            '';
-          };
+          aapt2 = pkgs.callPackage "${android}/pkgs/aapt2" {};
           jdk = pkgs.openjdk11_headless;
           gradle = pkgs.gradle_6;
         };
